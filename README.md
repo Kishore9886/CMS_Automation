@@ -1,2 +1,2 @@
-npx install playwright
+npx install playwright,
 npm install xlsx
