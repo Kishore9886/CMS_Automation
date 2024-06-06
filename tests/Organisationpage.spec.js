@@ -1,7 +1,7 @@
 const { test, expect } = require ("@playwright/test");
 
 
-test("org page",async ({ page }) => {
+test("organisation page",async ({ page }) => {
   //chrome - plugins / cookies;
   const email = "akhilesh@kazam.in";
   const orgname = 'Nikol EV';
@@ -11,6 +11,6 @@ test("org page",async ({ page }) => {
   await page.locator("#password").type("Akbl@1724");
   await page.locator("button[type='submit']").click();
   const titles = await page.locator(".body div a:nth-child(1)").allTextContents();
-  console.log(titles)
+  console.log("Nikol EV")
   
 });

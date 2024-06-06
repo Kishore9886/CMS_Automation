@@ -12,5 +12,6 @@ test("Login Flow",async ({ browser }) => {
   await email.fill("akhilesh@kazam.in");
   await page.locator("#password").fill("Akbl@1724");
   page.locator("button[type='submit']").click;
+  page.close();
   
 });
