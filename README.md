@@ -1,2 +1,3 @@
 npx install playwright,
-npm install xlsx
+npm install xlsx,
+npx playwright test
