@@ -1,7 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const XLSX = require('xlsx');
-
- 
+const path = require('path');
  
  test('Dashboard validation', async ({ page}) => {
   
@@ -26,25 +25,23 @@ const XLSX = require('xlsx');
     await page.waitForTimeout(6000); // 6000 milliseconds = 6 seconds
     // Click on the three dots menu
     await page.click("//div[@id='download']//*[name()='svg']");
-  
-    // Wait for a few seconds
-    await page.waitForTimeout(4000); // 4000 milliseconds = 4 seconds
+    await page.waitForTimeout(4000); 
     await page.click(".text-sm.text-kazamGray-900");
-    await page.waitForTimeout(5000); // 5000 milliseconds = 5 seconds
+    await page.waitForTimeout(10000); 
     // Uptime and Number of chargers 
-    await page.click("body > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1) > div:nth-child(1) > div:nth-child(2) > li:nth-child(1) > a:nth-child(1) > span:nth-child(2)");
-    await page.waitForTimeout(5000); // 5000 milliseconds = 5 seconds
-    await page.click("div[class='bg-white w-full flex flex-col h-full p-4 rounded-lg drop-shadow-sm border border-white hover:cursor-pointer hover:border-gray-200 z-7']");
-    await page.waitForTimeout(3000); // 3000 millisecond = 3 seconds
-    await page.click("p[class='text-sm'] div[class='text-sm $ ']");
-    await page.waitForTimeout(4000); // 4000 milliseconds = 4 seconds
+    // await page.click("body > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1) > div:nth-child(1) > div:nth-child(2) > li:nth-child(1) > a:nth-child(1) > span:nth-child(2)");
+    // await page.waitForTimeout(5000); 
+    // await page.click("div[class='bg-white w-full flex flex-col h-full p-4 rounded-lg drop-shadow-sm border border-white hover:cursor-pointer hover:border-gray-200 z-7']");
+    // await page.waitForTimeout(3000); 
+    // await page.click("p[class='text-sm'] div[class='text-sm $ ']");
+    // await page.waitForTimeout(4000);
     // Click on the three dots menu
-    await page.click("//div[@id='download']//*[name()='svg']");
-    await page.waitForTimeout(2000); // 2000 milliseconds = 2 seconds
+    // await page.click("//div[@id='download']//*[name()='svg']");
+    // await page.waitForTimeout(2000); // 2000 milliseconds = 2 seconds
 });
 
 
-test("Email download",async ({ page }) => {
+test.only("Email download",async ({ page }) => {
   
     const email = "akhilesh@kazam.in";
     await page.goto('https://mail.google.com');
@@ -77,8 +74,17 @@ test("Email download",async ({ page }) => {
   
     // Find and click the first link in the email
     const firstLink = await page.$('.a3s a');
-    await page.getByRole('link',{name:'Download Report'}).click();
-    page.on('download', download => download.path().then(console.log));
+        // Trigger the download
+        await page.getByRole('link', { name: 'Download Report' }).click();
+
+    // Handle the download
+      const localDownloadPath = 'C:/Users/kisho/Downloads';
+      page.on('download', async (download) => {
+      const downloadPath = path.join(localDownloadPath, download.suggestedFilename());
+      await download.saveAs(downloadPath);
+      console.log('Downloaded file:', downloadPath);
+  });
+  
     await page.waitForTimeout(5000); // 5000 milliseconds = 5 seconds
     console.log(await page.title());
   
