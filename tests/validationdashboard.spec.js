@@ -1,6 +1,10 @@
 const { test, expect } = require('@playwright/test');
 const XLSX = require('xlsx');
+const fs = require('fs');
 const path = require('path');
+const {convertCsvToXlsx} = require('@aternus/csv-to-xlsx');
+const localDownloadPath = 'C:/Users/kisho/Downloads';
+let downloadFilename
  
  test('Dashboard validation', async ({ page}) => {
   
@@ -41,7 +45,7 @@ const path = require('path');
 });
 
 
-test.only("Email download",async ({ page }) => {
+test("Email download",async ({ page }) => {
   
     const email = "akhilesh@kazam.in";
     await page.goto('https://mail.google.com');
@@ -78,25 +82,31 @@ test.only("Email download",async ({ page }) => {
         await page.getByRole('link', { name: 'Download Report' }).click();
 
     // Handle the download
-      const localDownloadPath = 'C:/Users/kisho/Downloads';
       page.on('download', async (download) => {
       const downloadPath = path.join(localDownloadPath, download.suggestedFilename());
       await download.saveAs(downloadPath);
-      console.log('Downloaded file:', downloadPath);
-  });
+      downloadFilename= download.suggestedFilename()
+   });
   
     await page.waitForTimeout(5000); // 5000 milliseconds = 5 seconds
     console.log(await page.title());
-  
-  
 });
 
 test("Total No of session validation",async ({ page }) => {
-  const fs = require('fs');
-  const path = require('path');
-  const XLSX = require('xlsx');({
+   const XLSX = require('xlsx');({
     acceptDownloads: true,
   });
+
+  let source = path.join(localDownloadPath, downloadFilename);
+  console.log('source',source);
+  let destination = path.join(localDownloadPath, 'converted_report.xlsx'); 
+  console.log('destination',destination);
+  try { 
+   await convertCsvToXlsx(source, destination)
+} catch (e) { 
+    console.error(e.toString()); 
+}
+
   
   // Path to the downloaded file
   const filePath = path.join(process.env.HOME || process.env.USERPROFILE, 'Downloads', 'Total usage.xlsx');
