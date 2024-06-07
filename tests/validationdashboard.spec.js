@@ -41,7 +41,7 @@ const path = require('path');
 });
 
 
-test.only("Email download",async ({ page }) => {
+test("Email download",async ({ page }) => {
   
     const email = "akhilesh@kazam.in";
     await page.goto('https://mail.google.com');
@@ -78,7 +78,7 @@ test.only("Email download",async ({ page }) => {
         await page.getByRole('link', { name: 'Download Report' }).click();
 
     // Handle the download
-      const localDownloadPath = 'C:/Users/kisho/Downloads';
+      const localDownloadPath = 'C:/Users/Admin/Downloads';
       page.on('download', async (download) => {
       const downloadPath = path.join(localDownloadPath, download.suggestedFilename());
       await download.saveAs(downloadPath);
@@ -129,10 +129,15 @@ test("Total usage validation",async ({ page }) => {
   const XLSX = require('xlsx');({
     acceptDownloads: true,
   });
+    // Path to the downloaded file
+  const filePath = path.join(process.env.HOME || process.env.USERPROFILE, 'Downloads', 'Total usage.xlsx');
   
-  function processExcelFile(filePath) {
-    const workbook = XLSX.readFile(filePath);
-    const sheetName = workbook.SheetNames[0]; // Assuming you want the first sheet
+  // Check if the file exists
+  if (fs.existsSync(filePath)) {
+     // Read the Excel file
+  const workbook = XLSX.readFile(filePath);
+  const sheetName = workbook.SheetNames[0]; // Get the first sheet name
+  const worksheet = workbook.Sheets[sheetName];
     const sheet = workbook.Sheets[sheetName];
 
    // Convert sheet to JSON to easily access rows and columns
