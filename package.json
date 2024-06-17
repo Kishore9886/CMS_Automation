@@ -12,6 +12,7 @@
     "@types/node": "^20.12.4"
   },
   "dependencies": {
+    "@aternus/csv-to-xlsx": "^2.1.5",
     "exceljs": "^4.4.0",
     "fs-extra": "^11.2.0",
     "playwright": "^1.44.1",

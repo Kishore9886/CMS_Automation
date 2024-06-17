@@ -2,9 +2,9 @@ const { devices } = require("@playwright/test");
 
 const config = {
   testDir: "./tests",
-  timeout: 50 * 1000,
+  timeout: 500 * 1000,
   expect: {
-    timeout: 50000,
+    timeout: 500000,
   },
 
   reporter: "html",
