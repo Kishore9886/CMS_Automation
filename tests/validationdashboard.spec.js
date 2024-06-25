@@ -8,16 +8,16 @@ let downloadFilename
  
  test('Dashboard validation', async ({ page}) => {
   
-  // Navigate to the login page
-    await page.goto('https://novo.kazam.in');
+    // Navigate to the login page
+      await page.goto('https://novo.kazam.in');
   
     // Login
-    await page.fill('#large-input','akhilesh@kazam.in');
-    await page.fill('#password','Akbl@1724');
-    await page.click("button[type='submit']");
-    await page.click('body > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > a:nth-child(7) > div:nth-child(1) > div:nth-child(1)');
+      await page.fill('#large-input','akhilesh@kazam.in');
+      await page.fill('#password','Akbl@1724');
+      await page.click("button[type='submit']");
+      await page.click("//p[normalize-space()='NIKOL EV']");
     // Wait for a few seconds
-    await page.waitForTimeout(5000); // 5000 milliseconds = 5 seconds
+      await page.waitForTimeout(5000); // 5000 milliseconds = 5 seconds
 
     // Print dashboard No of session value
     const dashboardValueSelector = "div[class='bg-white w-full flex flex-col h-full p-4 rounded-lg drop-shadow-sm border border-white hover:cursor-pointer hover:border-gray-200 z-9'] p[class='text-base font-medium']";
@@ -31,20 +31,20 @@ let downloadFilename
 
        console.log(`Total Usage (From Dashboard In kWh): ${dashboardusageValue}`);
 
-    await page.click("div[class='bg-white w-full flex flex-col h-full p-4 rounded-lg drop-shadow-sm border border-white hover:cursor-pointer hover:border-gray-200 z-9'] p[class='text-sm text-gray-800 font-normal']");
+      await page.click("div[class='bg-white w-full flex flex-col h-full p-4 rounded-lg drop-shadow-sm border border-white hover:cursor-pointer hover:border-gray-200 z-9'] p[class='text-sm text-gray-800 font-normal']");
     // Wait for a few seconds
-    await page.waitForTimeout(5000); // 5000 milliseconds = 5 seconds
+       await page.waitForTimeout(5000); // 5000 milliseconds = 5 seconds
     
     // Example: Applying a filter through an input field
-    await page.click("button[class='w-full flex gap-1 items-center bg-white $bg-black py-1.5 px-3 border border-gray-300 rounded-lg']"); 
-    await page.click('button:nth-child(4) div:nth-child(2) div:nth-child(1) div:nth-child(1) div:nth-child(1)'); // Replace with actual selector
+       await page.click("button[class='w-full flex gap-1 items-center bg-white $bg-black py-1.5 px-3 border border-gray-300 rounded-lg']"); 
+       await page.click('button:nth-child(4) div:nth-child(2) div:nth-child(1) div:nth-child(1) div:nth-child(1)'); // Replace with actual selector
     // Wait for a few seconds
-    await page.waitForTimeout(6000); // 6000 milliseconds = 6 seconds
+      await page.waitForTimeout(6000); // 6000 milliseconds = 6 seconds
     // Click on the three dots menu
-    await page.click("//div[@id='download']//*[name()='svg']");
-    await page.waitForTimeout(4000); 
-    await page.click(".text-sm.text-kazamGray-900");
-    await page.waitForTimeout(10000); 
+      await page.click("//div[@id='download']//*[name()='svg']");
+      await page.waitForTimeout(4000); 
+      await page.click(".text-sm.text-kazamGray-900");
+      await page.waitForTimeout(10000); 
     
 });
 
@@ -52,37 +52,37 @@ let downloadFilename
 test("Email download",async ({ page }) => {
   
     const email = "akhilesh@kazam.in";
-    await page.goto('https://mail.google.com');
+      await page.goto('https://mail.google.com');
   
     // Wait for the user to login 
-    await page.waitForSelector('input[type="email"]', { visible: true });
-    await page.fill('input[type="email"]', 'akhilesh@kazam.in');
-    await page.click('div[id="identifierNext"]');
+      await page.waitForSelector('input[type="email"]', { visible: true });
+      await page.fill('input[type="email"]', 'akhilesh@kazam.in');
+      await page.click('div[id="identifierNext"]');
   
-    await page.waitForTimeout(2000); // Waiting for next page to load
+      await page.waitForTimeout(2000); // Waiting for next page to load
   
-    await page.waitForSelector('input[type="password"]', { visible: true });
-    await page.fill('input[type="password"]', 'Akbl@1724');
-    await page.click('div[id="passwordNext"]');
+      await page.waitForSelector('input[type="password"]', { visible: true });
+      await page.fill('input[type="password"]', 'Akbl@1724');
+      await page.click('div[id="passwordNext"]');
   
-    await page.waitForNavigation(); // Waiting for login to complete
+      await page.waitForNavigation(); // Waiting for login to complete
 
 
-  // Click on the first email in the inbox
-    await page.waitForSelector('table[role="grid"] tr.zA', { visible: true });
-  const firstEmail = await page.$('table[role="grid"] tr.zA');
-  if (firstEmail) {
-    await firstEmail.click();
-  } else {
+    // Click on the first email in the inbox
+      await page.waitForSelector('table[role="grid"] tr.zA', { visible: true });
+    const firstEmail = await page.$('table[role="grid"] tr.zA');
+      if (firstEmail) {
+      await firstEmail.click();
+    } else {
     console.log('No emails found in the inbox.');
-  }
+    }
   
     // Wait for email content to load
-    await page.waitForSelector('.a3s', { visible: true });
+      await page.waitForSelector('.a3s', { visible: true });
   
     // Find and click the first link in the email
     const firstLink = await page.$('.a3s a');
-        // Trigger the download
+    // Trigger the download
         await page.getByRole('link', { name: 'Download Report' }).click();
 
     // Handle the download
@@ -93,8 +93,9 @@ test("Email download",async ({ page }) => {
       downloadFilename= download.suggestedFilename()
    });
   
-    await page.waitForTimeout(5000); // 5000 milliseconds = 5 seconds
-    console.log(await page.title());
+      await page.waitForTimeout(5000); // 5000 milliseconds = 5 seconds
+       console.log(await page.title());
+       
 });
 
 test("Total No of session validation",async ({ page }) => {
