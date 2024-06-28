@@ -358,20 +358,7 @@ test('Add charger flow validation', async ({ page}) => {
 
     const handle =  page.locator("//label[normalize-space()='Click to upload']");
     await handle.click();
-
-
-  // Locate the file input element and set the file to upload
-  const input = await page.$("//label[normalize-space()='Click to upload']");
-  
-  // Path to the image file in the local downloads directory
-  const filePath = './upload/aa1.png'; // Replace with the actual path
-  
-  // Upload the file
-  await input.setInputFiles(filePath);
-  
-   await page.waitForTimeout(2000); // 2000 milliseconds = 2 seconds
-   
-  // // Add charger button
+// // Add charger button
   // const addcharger = page.locator("//button[normalize-space()='Add Charger']");
   //   await addcharger.click();
   //   await page.waitForTimeout(5000); // 2000 milliseconds = 2 seconds
